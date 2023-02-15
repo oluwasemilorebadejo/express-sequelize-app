@@ -1,5 +1,5 @@
 const express = require("express");
-const expressHandlebars = require("express-handlebars");
+const { engine } = require("express-handlebars");
 const path = require("path");
 
 const db = require("./config/database");
@@ -14,6 +14,11 @@ db.authenticate()
   });
 
 const app = express();
+
+app.use(express.json());
+
+app.engine("handlebars", engine({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 app.get("/", (req, res) => res.send("INDEX"));
 
